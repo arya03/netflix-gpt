@@ -1,15 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
+import Body from "./components/Body";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p className='text-lg font-bold text-green-600 text-center'>
-          Hello, we are ready to build our project
-        </p>
-      </header>
-    </div>
+    <Body />
   );
 }
 
