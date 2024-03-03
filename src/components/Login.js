@@ -9,7 +9,9 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
+import { addUser } from "../utils/userSlice";
+import { BACKGROUND_IMAGE } from "../utils/constants";
+import { USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -47,13 +49,13 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/12824231?v=4",
+            // photoURL: "https://avatars.githubusercontent.com/u/12824231?v=4",
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               // Profile updated!
               const { uid, email, diplayName, photoURL } = auth.currentUser;
               dispatch(addUser({ uid, email, diplayName, photoURL }));
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -97,7 +99,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img src="https://assets.nflxext.com/ffe/siteui/vlv3/c0b69670-89a3-48ca-877f-45ba7a60c16f/2642e08e-4202-490e-8e93-aff04881ee8a/IN-en-20240212-popsignuptwoweeks-perspective_alpha_website_large.jpg" />
+        <img alt="background-img" src={BACKGROUND_IMAGE} />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
