@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { BACKGROUND_IMAGE } from "../utils/constants";
+import { BG_URL } from "../utils/constants";
 import { USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
@@ -99,7 +99,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img alt="background-img" src={BACKGROUND_IMAGE} />
+        <img alt="background-img" src={BG_URL} />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}

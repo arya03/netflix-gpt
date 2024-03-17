@@ -7,11 +7,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO } from "../utils/constants";
+import { toggleGptsearchView } from "../utils/gptSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -20,16 +22,16 @@ const Header = () => {
         // https://firebase.google.com/docs/reference/js/auth.user
         const { uid, email, diplayName, photoURL } = user;
         dispatch(addUser({ uid, email, diplayName, photoURL }));
-        navigate('/browse');
+        navigate("/browse");
         // ...
       } else {
         // User is signed out
         dispatch(removeUser());
-        navigate('/');
+        navigate("/");
       }
     });
     //Unsubscribe when component unmounts
-    return () => unsubscribe()
+    return () => unsubscribe();
   }, []);
 
   const handleSignOut = () => {
@@ -43,15 +45,22 @@ const Header = () => {
         navigate("/error");
       });
   };
+
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptsearchView());
+  };
+
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
-      <img
-        className="w-40"
-        src={LOGO}
-        alt="logo"
-      />
+      <img className="w-40" src={LOGO} alt="logo" />
       {user && (
         <div className="flex p-2">
+          <button
+            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg"
+            onClick={handleGptSearchClick}
+          >
+            {showGptSearch ? "Homepage" : "GPT Search"}
+          </button>
           <img alt="userIcon" className="w-12 h-12 p-2" src={user.photoURL} />
           <button className="text-white font-bold" onClick={handleSignOut}>
             (Sign out)
